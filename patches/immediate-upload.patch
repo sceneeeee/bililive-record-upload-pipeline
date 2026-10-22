@@ -1,0 +1,45 @@
+--- a/index-ZJeYopVC.cjs
++++ b/index-ZJeYopVC.cjs
+@@ -78213,6 +78213,8 @@
+         }
+         // 6. 处理文件同步和锁定
+         await this.handlePostProcessing(context, options);
++        // Enqueue a ready segment without waiting for the periodic fallback or the upload.
++        void this.handleLive(context.live).catch(error => index$1.logObj.error("Immediate upload scheduling failed", error));
+     }
+     /**
+      * 判断是否应该跳过后续处理
+@@ -79179,7 +79181,33 @@
+      * @param live 直播数据
+      * @param type 上传类型：handled-弹幕版，raw-原始版
+      */
++    uploadRuns = new WeakMap();
++    uploadPending = new WeakMap();
+     handleLive = async (live, type) => {
++        // Keep the requested channel: handled and raw must never collapse into one.
++        let pending = this.uploadPending.get(live);
++        if (!pending) this.uploadPending.set(live, pending = new Set());
++        pending.add(type);
++        const existing = this.uploadRuns.get(live);
++        if (existing) return existing;
++        const run = Promise.resolve().then(async () => {
++            try {
++                while (pending.size) {
++                    const requested = pending.values().next().value;
++                    pending.delete(requested);
++                    await this.handleLiveOnce(live, requested);
++                }
++            }
++            finally {
++                // Release synchronously with the drain, including on rejection.
++                this.uploadRuns.delete(live);
++                this.uploadPending.delete(live);
++            }
++        });
++        this.uploadRuns.set(live, run);
++        return run;
++    };
++    handleLiveOnce = async (live, type) => {
+         const config = this.configManager.getConfig(live.roomId);
+         if (this.isSameMediaUploadEnabled(config)) {
+             await this.uploadVideoToSameMedia(live, config);

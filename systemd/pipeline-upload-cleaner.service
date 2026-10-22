@@ -1,0 +1,29 @@
+[Unit]
+Description=Persistent terminal upload cleanup with source identity checks
+After=docker.service network.target
+Wants=docker.service
+
+[Service]
+EnvironmentFile=-/etc/bililive-pipeline/maintenance.env
+Type=simple
+ExecStart=/usr/local/sbin/pipeline-upload-cleaner.py --serve --apply $CLEANER_POLICY_ARGS
+Restart=on-failure
+RestartSec=5
+User=root
+UMask=0077
+Nice=15
+IOSchedulingClass=idle
+MemoryMax=128M
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+StateDirectory=pipeline-upload-cleaner
+StateDirectoryMode=0700
+ReadWritePaths=/var/lib/pipeline-upload-cleaner /opt/bililive-stack/video
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=pipeline-upload-cleaner
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+[Unit]
+Description=Apply approved uploader fix only outside the live and merge window
+After=docker.service network.target
+ConditionPathExists=/opt/bililive-stack/patches/uploader-3.20.0/approved.json
+ConditionPathExists=!/opt/bililive-stack/patches/uploader-3.20.0/applied.json
+ConditionPathExists=!/opt/bililive-stack/patches/uploader-3.20.0/failed.json
+
+[Service]
+EnvironmentFile=-/etc/bililive-pipeline/maintenance.env
+Type=oneshot
+ExecStart=/usr/local/sbin/pipeline-api-patch-window.py
+User=root
+UMask=0077
+TimeoutStartSec=120
+StandardOutput=journal
+StandardError=journal

@@ -1,0 +1,23 @@
+{
+  "versions": {
+    "recorder": "2.18.0",
+    "tools": "3.20.0"
+  },
+  "images": {
+    "bililive-recorder": "ghcr.io/bililiverecorder/bililiverecorder@sha256:f33bb4e53fe8dd6d725d49385a8b6b339e512b5b8eee46728f9cdadca189f061",
+    "bililive-api": "ghcr.io/renmu123/bililive-tools-backend@sha256:fdcb5294aaa2397bddfddec3dea4b64e48b2fda51d62b73f9d15267157c88433",
+    "bililive-web": "ghcr.io/renmu123/bililive-tools-frontend@sha256:8c792a876ad07d31c0f54403a48e212bcd40296f338da828e7973ab66253d245"
+  },
+  "bundles": {
+    "index-DQV9sVEn.cjs": {
+      "original_sha256": "7fd43740b5926722360ab6a5879f39064296042d87ca2762e85d53c05da6fcad",
+      "patched_sha256": "e26cd89cd52cf9945b327b9041b52c9baed39f600c2ec4c19e44a40a23af4e4c",
+      "patch": "upload-streams-and-path.patch"
+    },
+    "index-ZJeYopVC.cjs": {
+      "original_sha256": "629644c9c415adfa7c63367fb2dc238726f2b499519755224c361a89ab0474f0",
+      "patched_sha256": "86afa17b161b8c3d2d8728580826f786dd486707bc0b8eb47f4174798239d011",
+      "patch": "immediate-upload.patch"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://raw.githubusercontent.com/BililiveRecorder/BililiveRecorder/v2.18.0/configV3.schema.json",
+  "version": 3,
+  "global": {
+    "CuttingMode": {
+      "HasValue": true,
+      "Value": 2
+    },
+    "CuttingNumber": {
+      "HasValue": true,
+      "Value": 5120
+    },
+    "FileNameRecordTemplate": {
+      "HasValue": true,
+      "Value": "{{ name }}-{{ \"now\" | time_zone: \"Asia/Shanghai\" | format_date: \"MM月dd日HH时mm分ss秒\" }}-P{{ partIndex | format_number: \"00\" }}.flv"
+    },
+    "WebHookUrlsV2": {
+      "HasValue": true,
+      "Value": "http://bililive-api:18010/webhook/bililiverecorder"
+    }
+  },
+  "rooms": []
+}

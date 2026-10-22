@@ -1,0 +1,25 @@
+[Unit]
+Description=Read-only Bililive recording and upload reliability checks
+After=docker.service
+
+[Service]
+EnvironmentFile=-/etc/bililive-pipeline/maintenance.env
+Type=oneshot
+ExecStart=/usr/local/sbin/pipeline-recorder-monitor.py
+User=root
+Nice=15
+IOSchedulingClass=idle
+TimeoutStartSec=90
+MemoryMax=96M
+CPUQuota=10%
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+StateDirectory=pipeline-recorder-monitor
+StateDirectoryMode=0700
+ReadWritePaths=/var/lib/pipeline-recorder-monitor
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=pipeline-recorder-monitor

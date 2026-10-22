@@ -1,0 +1,12 @@
+[Unit]
+Description=Check Bililive recording, upload, and disk space every five minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+AccuracySec=15s
+Persistent=true
+Unit=pipeline-recorder-monitor.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,76 @@
+name: bililive-stack
+
+services:
+  bililive-web:
+    image: ghcr.io/renmu123/bililive-tools-frontend@sha256:8c792a876ad07d31c0f54403a48e212bcd40296f338da828e7973ab66253d245
+    container_name: bililive-web
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    networks:
+      - bililive-net
+    depends_on:
+      - bililive-api
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "3"
+
+  bililive-api:
+    image: ghcr.io/renmu123/bililive-tools-backend@sha256:fdcb5294aaa2397bddfddec3dea4b64e48b2fda51d62b73f9d15267157c88433
+    container_name: bililive-api
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:18010:18010"
+    volumes:
+      - ./data:/app/data
+      - ./video:/app/video
+    environment:
+      BILILIVE_TOOLS_PASSKEY: ${BILILIVE_TOOLS_PASSKEY:?required}
+      BILILIVE_TOOLS_BILIKEY: ${BILILIVE_TOOLS_BILIKEY:?required}
+      TZ: Asia/Shanghai
+    networks:
+      - bililive-net
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "3"
+
+  bililive-recorder:
+    image: ghcr.io/bililiverecorder/bililiverecorder@sha256:f33bb4e53fe8dd6d725d49385a8b6b339e512b5b8eee46728f9cdadca189f061
+    container_name: bililive-recorder
+    restart: unless-stopped
+    command:
+      - run
+      - --bind
+      - http://*:2356
+      - --http-basic-user
+      - ${BREC_HTTP_BASIC_USER:?required}
+      - --http-basic-pass
+      - ${BREC_HTTP_BASIC_PASS:?required}
+      - --config-override
+      - /config/config.json
+      - /rec
+    ports:
+      - "127.0.0.1:2356:2356"
+    volumes:
+      - ./video:/rec
+      - ./recorder:/config
+    environment:
+      TZ: Asia/Shanghai
+    networks:
+      - bililive-net
+    depends_on:
+      - bililive-api
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "3"
+
+networks:
+  bililive-net:
+    name: bililive-net
+    driver: bridge

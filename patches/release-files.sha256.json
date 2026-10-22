@@ -1,0 +1,71 @@
+{
+  "scripts/prepare_deployment.py": {
+    "sha256": "8595f165bd6fd12ef0069ca35343658e9a0664af37ad386867dcc3a4c7b2c365"
+  },
+  "scripts/extract_upstream.sh": {
+    "sha256": "02bb9aeb6d8ec58ff3244abb53082dae8af649dd73327b0718b6a77884060fa3"
+  },
+  "scripts/pipeline-recorder-monitor.py": {
+    "sha256": "f3cf7273e0c9992a4f6adb07531362c0540b28c2ceac630b393461a1a5d00109"
+  },
+  "scripts/pipeline-api-patch-window.py": {
+    "sha256": "35a2340522744bed9dee779c0cc0cffd8cd609075074a72fbbe07e5723817be2"
+  },
+  "scripts/rollback_api.sh": {
+    "sha256": "12a3b2b2d8156f27f658dcc489edb79575cc5721e0fe92b247642c38ab4aacd0"
+  },
+  "scripts/export_index.py": {
+    "sha256": "ca73db170733256b8776fdf03b912a8af6d7c5297e20477689e4a6fae46f3fd2"
+  },
+  "scripts/scan_repository.py": {
+    "sha256": "442c2ff8f88364ee1eb8b107da2eabe1deeff3d1f7e1a609a1f1d73cbcf063d5"
+  },
+  "scripts/apply_uploader_patch.py": {
+    "sha256": "179d693788552e7fad33df6c76934b97c161a9115fa52813aa684b6249063edd"
+  },
+  "scripts/verify_release.py": {
+    "sha256": "579db80f457a9396a4a36fe9faf5f20bf5947c49a8cffe3786129006d9911854"
+  },
+  "scripts/pipeline-upload-cleaner.py": {
+    "sha256": "a4b0b7baf3f1b6f74ffe56071ead05e7ec0d90cc3f489a7a310195f3554d0d0c"
+  },
+  "scripts/build_patches.py": {
+    "sha256": "08de9bef518458f3bc49426651de831130202fa92f5cca82aae4234bc635bdcb"
+  },
+  "scripts/install_maintenance.sh": {
+    "sha256": "8eb3ca303d71c0dad3bdcffc006f52ebcf1f5011723a3648891b0f00ecf40942"
+  },
+  "systemd/pipeline-recorder-monitor.service": {
+    "sha256": "0b6b77dc2a70d3d68060d4be0a64ee557ed0649663e2ee543bf03e85d929272b"
+  },
+  "systemd/pipeline-api-patch-window.timer": {
+    "sha256": "c2f2275d6417632994b7bac7ce570c79675760c53e56646f4e5778ff301a86da"
+  },
+  "systemd/pipeline-recorder-monitor.timer": {
+    "sha256": "652559b4634d35459ece8cd57694101a31ec4b0f844724b60556e557d26244ca"
+  },
+  "systemd/pipeline-upload-cleaner.service": {
+    "sha256": "cae7efe9a4889296792e5b5d4eae84558801777760c684f0fd28fe7307fe8387"
+  },
+  "systemd/pipeline-api-patch-window.service": {
+    "sha256": "3a5d4b16cec2a882773aece5911bcbca83ee6d8e6bec2bd564049d3355bbb522"
+  },
+  "compose/compose.example.yaml": {
+    "sha256": "f2d336b7508c77b108a85cdcc951f765d2708cf9cce6f1e6ed3951c873c58eec"
+  },
+  "compose/compose.base.example.yaml": {
+    "sha256": "82eb4b2953dc4399e787b895694366fc01e49bdd02dba030a09259f718e3560c"
+  },
+  "compose/.env.example": {
+    "sha256": "b1a9f9186a6e03b6df4d2c6f50afef455e83ee36afa2285743430409fe8a9ccf"
+  },
+  "patches/immediate-upload.patch": {
+    "sha256": "97f8c6e154a4b7960d37cc6a8926fbb6e3da9246b1ef744c3a58f642bff6f60d"
+  },
+  "patches/upload-streams-and-path.patch": {
+    "sha256": "4289ac430de3a10137b3312782e62dbd278be1ee1603e4de34cd73f8c06d09f6"
+  },
+  "patches/versions.lock.json": {
+    "sha256": "37d36ef3655bd879e2a7f85d49514911d620b1fe868ae2066025faf5abbb1cd2"
+  }
+}

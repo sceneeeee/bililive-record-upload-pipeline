@@ -1,0 +1,38 @@
+--- a/index-DQV9sVEn.cjs
++++ b/index-DQV9sVEn.cjs
+@@ -65639,11 +65639,18 @@
+         while (retryCount >= 0) {
+             try {
+                 // 每次重试都需要重新创建流，因为流读取后无法重用
+-                let [stream, streamSize] = createReadStream(filePath, start, chunk_size, size);
+-                if (this.options.limitRate > 0) {
+-                    stream = stream.pipe(new Throttle$1(this.options.limitRate * 1024));
++                const [sourceStream, streamSize] = createReadStream(filePath, start, chunk_size, size);
++                let stream = sourceStream;
++                try {
++                    if (this.options.limitRate > 0) {
++                        stream = sourceStream.pipe(new Throttle$1(this.options.limitRate * 1024));
++                    }
++                    await this.uploadChunkApi(options, stream, streamSize);
+                 }
+-                await this.uploadChunkApi(options, stream, streamSize);
++                finally {
++                    if (stream !== sourceStream) stream.destroy();
++                    sourceStream.destroy();
++                }
+                 // console.log("上传切片成功", partNumber);
+                 return partNumber;
+             }
+@@ -191393,6 +191400,12 @@
+         this.pid = options.pid;
+         this.extra = {
+             title: this?.command?.title,
++            filePath: command.filePath,
++            fileSize: command.size,
++            sourceIdentity: (() => {
++                const s = fs$D.statSync(command.filePath);
++                return { dev: s.dev, ino: s.ino, size: s.size };
++            })(),
+         };
+         this.useUploadPartPersistence = appConfig.get("biliUpload")?.useUploadPartPersistence;
+         command.emitter.on("completed", async (data) => {
