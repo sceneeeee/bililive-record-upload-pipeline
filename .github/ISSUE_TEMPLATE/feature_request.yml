@@ -1,0 +1,26 @@
+name: Feature request
+description: Suggest an improvement with compatibility and safety considerations
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility and data safety
+      description: Consider retries, handled/raw scheduling, multipart merge, file identity, cancellation and irreversible deletion.
+  - type: textarea
+    id: tests
+    attributes:
+      label: Suggested synthetic tests
